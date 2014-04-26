@@ -82,10 +82,11 @@ namespace Break_em_All
 
             brickImage = Content.Load<Texture2D>("brick");
 
+            var availScreenWidthForGame = graphics.PreferredBackBufferWidth /* height for ad unit - 300*50 320*50 480*80 640*100 */;
             screenRectangle = new Rectangle(
              0,
              0,
-             graphics.PreferredBackBufferWidth - graphics.PreferredBackBufferWidth % brickImage.Width,
+             availScreenWidthForGame - availScreenWidthForGame % brickImage.Width,
              graphics.PreferredBackBufferHeight);
 
             Texture2D paddleTexture = Content.Load<Texture2D>("paddle");
@@ -142,8 +143,8 @@ namespace Break_em_All
                     bricks[x, y] = new Brick(
                     brickImage,
                     new Rectangle(
-                    x * brickImage.Width,
-                    y * brickImage.Height,
+                    x * brickImage.Width + screenRectangle.X,
+                    y * brickImage.Height + screenRectangle.Y,
                     brickImage.Width,
                     brickImage.Height),
                     tint,
@@ -278,18 +279,18 @@ namespace Break_em_All
             Texture2D rect = new Texture2D(GraphicsDevice, screenRectangle.Width, screenRectangle.Height);
 
             Color[] data = new Color[screenRectangle.Width * screenRectangle.Height];
-            for (int i = 0; i < data.Length; ++i) 
+            for (int i = 0; i < data.Length; ++i)
                 data[i] = Color.CornflowerBlue;
             rect.SetData(data);
 
-            spriteBatch.Draw(rect, new Vector2(0, 0), Color.CornflowerBlue);
+            spriteBatch.Draw(rect, new Vector2(screenRectangle.X, screenRectangle.Y), Color.CornflowerBlue);
 
             switch (this.gameState)
             {
                 case GameState.START:
                     // Draw 'play'
                     var playTexture = font.MeasureString("Play");
-                    spriteBatch.DrawString(font, "Play", new Vector2(screenRectangle.Width / 2 - playTexture.X / 2, screenRectangle.Height / 2 - playTexture.Y / 2), Color.White);
+                    spriteBatch.DrawString(font, "Play", new Vector2(screenRectangle.X + screenRectangle.Width / 2 - playTexture.X / 2, screenRectangle.Y + screenRectangle.Height / 2 - playTexture.Y / 2), Color.White);
                     break;
                 case GameState.RUNNING:
                     paddle.Draw(spriteBatch);
@@ -299,7 +300,7 @@ namespace Break_em_All
                         brick.Draw(spriteBatch);
 
                     // Draw the score
-                    spriteBatch.DrawString(font, "Score: " + score, new Vector2(GraphicsDevice.Viewport.TitleSafeArea.X, GraphicsDevice.Viewport.TitleSafeArea.Y), Color.White);
+                    spriteBatch.DrawString(font, "Score: " + score, new Vector2(GraphicsDevice.Viewport.TitleSafeArea.X + screenRectangle.X, GraphicsDevice.Viewport.TitleSafeArea.Y + screenRectangle.Y), Color.White);
 
                     break;
                 case GameState.END:
@@ -315,9 +316,9 @@ namespace Break_em_All
 
                     // Draw 'play again'
                     var scoreTexture = font.MeasureString("Score: " + this.score);
-                    spriteBatch.DrawString(font, "Score: " + this.score, new Vector2(screenRectangle.Width / 2 - scoreTexture.X / 2, screenRectangle.Height / 2 - 2 * scoreTexture.Y), Color.White);
+                    spriteBatch.DrawString(font, "Score: " + this.score, new Vector2(screenRectangle.X + screenRectangle.Width / 2 - scoreTexture.X / 2, screenRectangle.Y + screenRectangle.Height / 2 - 2 * scoreTexture.Y), Color.White);
                     var playAgainTexture = font.MeasureString("Play Again");
-                    spriteBatch.DrawString(font, "Play Again", new Vector2(screenRectangle.Width / 2 - playAgainTexture.X / 2, screenRectangle.Height / 2 - playAgainTexture.Y / 2), Color.White);
+                    spriteBatch.DrawString(font, "Play Again", new Vector2(screenRectangle.X + screenRectangle.Width / 2 - playAgainTexture.X / 2, screenRectangle.Y + screenRectangle.Height / 2 - playAgainTexture.Y / 2), Color.White);
                     break;
                 default:
                     //TODO: logging

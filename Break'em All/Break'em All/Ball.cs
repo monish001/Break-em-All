@@ -44,16 +44,16 @@ namespace Break_em_All
         private void CheckWallCollision()
         {
             // If ball goes out of screen on left side, bring it back and turn the horizontal direction.
-            if (position.X < 0)
+            if (position.X < screenBounds.X)
             {
-                position.X = 0;
+                position.X = screenBounds.X;
                 motion.X *= -1;
             }
 
             // If ball goes out of screen on right side, bring it back and turn the horizontal direction.
-            if (position.X + texture.Width > screenBounds.Width)
+            if (position.X + texture.Width > screenBounds.X + screenBounds.Width)
             {
-                position.X = screenBounds.Width - texture.Width;
+                position.X = screenBounds.X + screenBounds.Width - texture.Width;
                 motion.X *= -1;
             }
 

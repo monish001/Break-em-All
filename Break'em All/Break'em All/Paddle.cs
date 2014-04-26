@@ -99,10 +99,10 @@ namespace Break_em_All
 
         private void LockPaddle()
         {
-            if (position.X < 0)
-                position.X = 0;
-            if (position.X + texture.Width > screenBounds.Width)
-                position.X = screenBounds.Width - texture.Width;
+            if (position.X < screenBounds.X)
+                position.X = screenBounds.X;
+            if (position.X + texture.Width > screenBounds.X + screenBounds.Width)
+                position.X = screenBounds.X + screenBounds.Width - texture.Width;
         }
 
         public void SetInStartPosition()
