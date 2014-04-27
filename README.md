@@ -3,6 +3,8 @@ Break-em-All
 
 Windows phone game - a variation of popular game 'breaking out'
 
+Link in the windows phone store: http://www.windowsphone.com/en-us/store/app/break-em-all/a3b8a457-bf72-4525-bbb3-bf0cfd3d08dc
+
 Description for the Store:
 Get maximum score by breaking as many bricks as possible. Go, break'em all!!
 
