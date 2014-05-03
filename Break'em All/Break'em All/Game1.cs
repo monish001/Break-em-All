@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Input.Touch;
 using System;
+using System.Diagnostics;
 
 namespace Break_em_All
 {
@@ -26,6 +27,7 @@ namespace Break_em_All
         private Brick[,] bricksArray;
 
         public static Rectangle gameContentRect;
+        Rectangle adUnitRect;
         private int gameScore;
 
         // The font used to display UI elements
@@ -103,7 +105,7 @@ namespace Break_em_All
             // Now create an actual ad for display.
             // Create a banner ad for the game. Advertisement is shown below the game content.
             int adUnitWidth = 320, adUnitHeight = 50;
-            Rectangle adUnitRect = new Rectangle(
+            adUnitRect = new Rectangle(
                 (GraphicsDevice.Viewport.Bounds.Width - adUnitWidth) / 2, // centered on the display
                 Game1.gameContentRect.Y + Game1.gameContentRect.Height - adUnitHeight,
                 adUnitWidth, adUnitHeight);
@@ -215,63 +217,65 @@ namespace Break_em_All
                     }
                     break;
                 case GameState.RUNNING:
-
-                    // Update paddle position as per user horizontal drag input
-                    while (TouchPanel.IsGestureAvailable)
+                    if (!advertisement.isUserEngaged())
                     {
-                        GestureSample gesture = TouchPanel.ReadGesture();
-                        if (gesture.GestureType == GestureType.HorizontalDrag)
+                        // Update paddle position as per user horizontal drag input
+                        while (TouchPanel.IsGestureAvailable)
                         {
-                            paddleObj.Update(gesture.Delta);
-                        }
-                    }
-
-                    // Update the ball position
-                    ballObj.Update(gameTime);
-
-                    // Add the new brick before checking for collision with the ball.
-                    if (oldElapsedGameTime.TotalMilliseconds > 1000)
-                    {
-                        oldElapsedGameTime = new TimeSpan(0);
-                        Random rand = new Random();
-                        var brickNumberX = rand.Next(0, this.numBricksInX);
-                        for (int brickNumberY = 0; ; brickNumberY++)
-                        {
-                            if (brickNumberY == numBricksInY)
+                            GestureSample gesture = TouchPanel.ReadGesture();
+                            if (gesture.GestureType == GestureType.HorizontalDrag)
                             {
-                                this.gameState = GameState.END;
-                                TouchPanel.EnabledGestures = GestureType.Tap;
-                                break;
-                            }
-
-                            var currentBrick = bricksArray[brickNumberX, brickNumberY];
-                            if (currentBrick.getIsAlive() == false)
-                            {
-                                currentBrick.toggleIsAlive();
-                                break;
+                                paddleObj.Update(gesture.Delta);
                             }
                         }
-                    }
-                    else
-                        oldElapsedGameTime += gameTime.ElapsedGameTime;
 
-                    // Check brick and ball collisions. Update scores
-                    foreach (Brick brick in bricksArray)
-                    {
-                        var isBrickCollided = brick.CheckCollision(ballObj, brickBallCollisionSound);
-                        if (isBrickCollided)
-                            this.gameScore += 10;
-                    }
-                    ballObj.PaddleCollision(paddleObj.GetBounds(), ballPaddleCollisionSound);
+                        // Update the ball position
+                        ballObj.Update(gameTime);
 
-                    //If ball is fallen, end the game.
-                    if (ballObj.OffBottom())
-                    {
-                        this.gameState = GameState.END;
-                        TouchPanel.EnabledGestures = GestureType.Tap;
-                    }
+                        // Add the new brick before checking for collision with the ball.
+                        if (oldElapsedGameTime.TotalMilliseconds > 1000)
+                        {
+                            oldElapsedGameTime = new TimeSpan(0);
+                            Random rand = new Random();
+                            var brickNumberX = rand.Next(0, this.numBricksInX);
+                            for (int brickNumberY = 0; ; brickNumberY++)
+                            {
+                                if (brickNumberY == numBricksInY)
+                                {
+                                    this.gameState = GameState.END;
+                                    TouchPanel.EnabledGestures = GestureType.Tap;
+                                    break;
+                                }
 
-                    base.Update(gameTime);
+                                var currentBrick = bricksArray[brickNumberX, brickNumberY];
+                                if (currentBrick.getIsAlive() == false)
+                                {
+                                    currentBrick.toggleIsAlive();
+                                    break;
+                                }
+                            }
+                        }
+                        else
+                            oldElapsedGameTime += gameTime.ElapsedGameTime;
+
+                        // Check brick and ball collisions. Update scores
+                        foreach (Brick brick in bricksArray)
+                        {
+                            var isBrickCollided = brick.CheckCollision(ballObj, brickBallCollisionSound);
+                            if (isBrickCollided)
+                                this.gameScore += 10;
+                        }
+                        ballObj.PaddleCollision(paddleObj.GetBounds(), ballPaddleCollisionSound);
+
+                        //If ball is fallen, end the game.
+                        if (ballObj.OffBottom())
+                        {
+                            this.gameState = GameState.END;
+                            TouchPanel.EnabledGestures = GestureType.Tap;
+                        }
+
+                        base.Update(gameTime);
+                    }
 
                     break;
 
@@ -279,9 +283,21 @@ namespace Break_em_All
                     // Wait till there is any touch gesture. Afterwards, change the gameState to RUNNING and continue further.
                     if (TouchPanel.IsGestureAvailable)
                     {
-                        this.gameState = GameState.RUNNING;
-                        TouchPanel.EnabledGestures = GestureType.HorizontalDrag;
-                        StartGame();
+                        GestureSample gesture = TouchPanel.ReadGesture();
+                        if (gesture.GestureType == GestureType.Tap)
+                        {
+                            if (gesture.Position.X >= adUnitRect.Left && gesture.Position.X <= adUnitRect.Right && gesture.Position.Y >= adUnitRect.Top && gesture.Position.Y <= adUnitRect.Bottom)
+                            {
+                                // Ad is clicked
+                            }
+                            else
+                            {
+                                this.gameState = GameState.RUNNING;
+                                TouchPanel.EnabledGestures = GestureType.HorizontalDrag;
+                                StartGame();
+                            }
+                        }
+
                     }
                     break;
                 default:

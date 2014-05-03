@@ -27,6 +27,7 @@ namespace Break_em_All
             bannerAd.ErrorOccurred += new EventHandler<Microsoft.Advertising.AdErrorEventArgs>(bannerAd_ErrorOccurred);
             bannerAd.AdRefreshed += new EventHandler(bannerAd_AdRefreshed);
             bannerAd.VisibleChanged += new EventHandler(bannerAd_VisibleChanged);
+            bannerAd.EngagedChanged += new EventHandler(bannerAd_EngagedChanged);
 
             // Provide the location to the ad for better targeting (optional).
             // This is done by starting a GeoCoordinateWatcher and waiting for the location to be available.
@@ -64,7 +65,17 @@ namespace Break_em_All
         }
 
         /// <summary>
-        /// This is called whenever a new ad is received by the ad client.
+        /// This is called whenever ad is engaged by the user.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void bannerAd_EngagedChanged(object sender, EventArgs e)
+        {
+            Debug.WriteLine("Ad is now visible.");
+        }
+
+        /// <summary>
+        /// This is called whenever visible property of bannerAdObj is changed.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -125,6 +136,11 @@ namespace Break_em_All
             // Initialize the AdGameComponent with your ApplicationId and add it to the game.
             AdGameComponent.Initialize(game, applicationId);
             game.Components.Add(AdGameComponent.Current);
+        }
+
+        public bool isUserEngaged()
+        {
+            return bannerAd.Engaged;
         }
     }
 }
