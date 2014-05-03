@@ -1,18 +1,20 @@
 FEATURES
 Following is the list of features that could be incorporated in the game. These would be tracked in a feature tracking software soon.
+
 Version 1.1.0.0:
-> UI Theme upgrade. Background improvement remaining.
 > Update components based on time elapsed. DONE	
 > Bug fix: ad not getting clicked. DONE. base.Update was not getting called properly.
 > Bug fix: Game exits as soon as it is opened. DONE. This was because for background image should be 2^N pixels wide and long (due to tiling).
+> UI Theme upgrade. Background improvement remaining. IN PROGRESS. START and END state screens remaining.
+> Feature: Implement highscore.
 
-> Spaces/patterns inside the game.
-> Full grid should move down and new bricks should add from top.
 
+Version 1.2.0.0 and onwards:
+> Feature: Levels having patterns of spaces inside the bricks.
+> Feature Suggestion: Full grid should move down and new bricks should add from top.
 > Feature: Find direction of ball based on where it hits the paddle. Also, update paddle image to show curves.
 > Feature: Make the background movement in x direction SMOOTH.
 > Feature: Localization (of text).
-> Feature: Implement highscore.
 > Feature: Props on multi-brick break.
 > Feature: Audio for animations
 > Feature: Animations for ball, paddle and brick blasts.
