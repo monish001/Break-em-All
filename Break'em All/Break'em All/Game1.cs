@@ -211,7 +211,7 @@ namespace Break_em_All
                     }
 
                     // Update the ball position
-                    ball.Update();
+                    ball.Update(gameTime);
 
                     // Add the new brick before checking for collision with the ball.
                     if (oldElapsedGameTime.TotalMilliseconds > 1000)
@@ -288,20 +288,24 @@ namespace Break_em_All
             spriteBatch.Begin(SpriteSortMode.FrontToBack, BlendState.Opaque, SamplerState.LinearWrap,
                 DepthStencilState.Default, RasterizerState.CullNone);
             
-            //Draw background image
-            background.Draw(spriteBatch);
-
-            spriteBatch.End();
-
-            spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend);
             switch (this.gameState)
             {
                 case GameState.START:
+                    //Draw background image
+                    background.Draw(spriteBatch, 0.5f);
+                    spriteBatch.End();
+                    spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend);
+
                     // Draw 'play'
                     var playTexture = font.MeasureString("Play");
                     spriteBatch.DrawString(font, "Play", new Vector2(screenRectangle.X + screenRectangle.Width / 2 - playTexture.X / 2, screenRectangle.Y + screenRectangle.Height / 2 - playTexture.Y / 2), Color.White);
                     break;
                 case GameState.RUNNING:
+                    //Draw background image
+                    background.Draw(spriteBatch, 1f);
+                    spriteBatch.End();
+                    spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
+
                     paddle.Draw(spriteBatch);
 
                     ball.Draw(spriteBatch);
@@ -313,15 +317,10 @@ namespace Break_em_All
 
                     break;
                 case GameState.END:
-                    //paddle.Draw(spriteBatch);
-                    //ball.Draw(spriteBatch);
-                    //foreach (Brick brick in bricks)
-                    //    brick.Draw(spriteBatch);
-
-                    // Draw the score
-                    //spriteBatch.DrawString(font, "Score: " + score, new Vector2(GraphicsDevice.Viewport.TitleSafeArea.X, GraphicsDevice.Viewport.TitleSafeArea.Y), Color.White);
-
-                    //Show animation for game end. Afterwards, give option to play again.
+                    //Draw background image
+                    background.Draw(spriteBatch, 0.5f);
+                    spriteBatch.End();
+                    spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend);
 
                     // Draw 'play again'
                     var scoreTexture = font.MeasureString("Score: " + this.score);

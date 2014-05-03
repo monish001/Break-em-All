@@ -9,14 +9,14 @@ namespace Break_em_All
 {
     class Ball
     {
-        Vector2 motion;
+        Vector2 motion; // Unit vector to represent the direction of ball's movement.
         Vector2 position;
         Rectangle bounds;
-        float ballSpeed = 4;
+        float currentBallSpeed;
         Texture2D texture;
         Rectangle screenBounds;
         bool collided;
-        const float ballStartSpeed = 8f;
+        const float initBallSpeed = 0.5f;
         public Rectangle Bounds
         {
             get
@@ -32,12 +32,12 @@ namespace Break_em_All
             this.texture = texture;
             this.screenBounds = screenBounds;
         }
-        public void Update()
+        public void Update(GameTime gameTime)
         {
             //TODO: MAKE IT FRAME-RATE INDEPENDENT
             collided = false;
-            position += motion * ballSpeed;
-            ballSpeed += 0.001f;
+            position += motion * currentBallSpeed * gameTime.ElapsedGameTime.Milliseconds;
+            currentBallSpeed += 0.0001f;
 
             CheckWallCollision();
         }
@@ -69,7 +69,7 @@ namespace Break_em_All
             Random rand = new Random();
             motion = new Vector2(rand.Next(2, 6), -rand.Next(2, 6));
             motion.Normalize();
-            ballSpeed = ballStartSpeed;
+            currentBallSpeed = initBallSpeed;
             position.Y = paddleLocation.Y - texture.Height;
             position.X = paddleLocation.X + (paddleLocation.Width - texture.Width) / 2;
         }

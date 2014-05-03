@@ -1,12 +1,12 @@
 FEATURES
 Following is the list of features that could be incorporated in the game. These would be tracked in a feature tracking software soon.
 > UI Theme upgrade.
-> Update components based on time elapsed.
+> Update components based on time elapsed. DONE
 
-> Spaces/pattern inside the game.
+> Spaces/patterns inside the game.
 > Full grid should move down and new bricks should add from top.
 
-
+> Feature: Localization (of text).
 > Feature: Implement highscore.
 > Feature: Props on multi-brick break.
 > Feature: Audio for animations
