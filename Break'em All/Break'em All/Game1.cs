@@ -26,12 +26,14 @@ namespace Break_em_All
         private Texture2D brickTexture;
         private Brick[,] bricksArray;
 
+        private Texture2D playIcon;
+
         public static Rectangle gameContentRect;
         Rectangle adUnitRect;
         private int gameScore;
 
         // The font used to display UI elements
-        private SpriteFont font;
+        private SpriteFont font24, font36;
 
         private GameState gameState;
 
@@ -88,9 +90,11 @@ namespace Break_em_All
         /// </summary>
         protected override void LoadContent()
         {
+            this.playIcon = Content.Load<Texture2D>("playIcon");
             this.ballPaddleCollisionSound = Content.Load<SoundEffect>("sound/beep1");
             this.brickBallCollisionSound = Content.Load<SoundEffect>("sound/beep6");
-            this.font = Content.Load<SpriteFont>("Kootenay");
+            this.font24 = Content.Load<SpriteFont>("font/Kootenay24");
+            this.font36 = Content.Load<SpriteFont>("font/Kootenay36");
             this.brickTexture = Content.Load<Texture2D>("brickTranslucent");
 
             // Initialize dimensions fo game content. brickTexture.Width is used here as gameContent.Width should be N * brickTexture.Width.
@@ -335,8 +339,15 @@ namespace Break_em_All
                     spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend);
 
                     // Draw 'play'
-                    var playTexture = font.MeasureString("Play");
-                    spriteBatch.DrawString(font, "Play", new Vector2(gameContentRect.X + gameContentRect.Width / 2 - playTexture.X / 2, gameContentRect.Y + gameContentRect.Height / 2 - playTexture.Y / 2), Color.White);
+                    Vector2 playTextureDimensions = font36.MeasureString("Play  ");
+                    Vector2 playIconDimensions = new Vector2(this.playIcon.Width, this.playIcon.Height);
+                    Vector2 playTextPosition = new Vector2(Game1.gameContentRect.X + Game1.gameContentRect.Width / 2 - (playTextureDimensions.X + playIconDimensions.X) / 2, Game1.gameContentRect.Y + Game1.gameContentRect.Height / 2 - (playTextureDimensions.Y) / 2);
+                    spriteBatch.DrawString(font36, "Play  ", playTextPosition, Color.White);
+                    Rectangle playIconRect = new Rectangle(
+                        (int)(Game1.gameContentRect.X + Game1.gameContentRect.Width / 2.0 + playTextureDimensions.X / 2.0 - playIconDimensions.X / 2.0),
+                        (int)(Game1.gameContentRect.Y + Game1.gameContentRect.Height / 2.0 - (playIconDimensions.Y) / 2.0),
+                        this.playIcon.Width, this.playIcon.Height);
+                    spriteBatch.Draw(playIcon, playIconRect, Color.White);
                     break;
                 case GameState.RUNNING:
                     // Set the gameContentRect height
@@ -357,7 +368,7 @@ namespace Break_em_All
                         brick.Draw(spriteBatch);
 
                     // Draw the score
-                    spriteBatch.DrawString(font, "Score: " + gameScore, new Vector2(GraphicsDevice.Viewport.TitleSafeArea.X + gameContentRect.X, GraphicsDevice.Viewport.TitleSafeArea.Y + gameContentRect.Y), Color.White);
+                    spriteBatch.DrawString(font24, "Score: " + gameScore, new Vector2(GraphicsDevice.Viewport.TitleSafeArea.X + gameContentRect.X, GraphicsDevice.Viewport.TitleSafeArea.Y + gameContentRect.Y), Color.White);
 
                     break;
                 case GameState.END:
@@ -372,11 +383,20 @@ namespace Break_em_All
                     spriteBatch.End();
                     spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend);
 
-                    // Draw 'play again'
-                    var scoreTexture = font.MeasureString("Score: " + this.gameScore);
-                    spriteBatch.DrawString(font, "Score: " + this.gameScore, new Vector2(gameContentRect.X + gameContentRect.Width / 2 - scoreTexture.X / 2, gameContentRect.Y + gameContentRect.Height / 2 - 2 * scoreTexture.Y), Color.White);
-                    var playAgainTexture = font.MeasureString("Play Again");
-                    spriteBatch.DrawString(font, "Play Again", new Vector2(gameContentRect.X + gameContentRect.Width / 2 - playAgainTexture.X / 2, gameContentRect.Y + gameContentRect.Height / 2 - playAgainTexture.Y / 2), Color.White);
+                    // Draw 'Score'
+                    var scoreTexture = font24.MeasureString("Score: " + this.gameScore);
+                    spriteBatch.DrawString(font24, "Score: " + this.gameScore, new Vector2(gameContentRect.X + gameContentRect.Width / 2 - scoreTexture.X / 2, gameContentRect.Y + gameContentRect.Height / 2 - 2 * scoreTexture.Y), Color.White);
+
+                    // Draw 'Play'
+                    Vector2 playTextureDimensions2 = font36.MeasureString("Play  ");
+                    Vector2 playIconDimensions2 = new Vector2(this.playIcon.Width, this.playIcon.Height);
+                    Vector2 playTextPosition2 = new Vector2(Game1.gameContentRect.X + Game1.gameContentRect.Width / 2 - (playTextureDimensions2.X + playIconDimensions2.X) / 2, Game1.gameContentRect.Y + Game1.gameContentRect.Height / 2 - (playTextureDimensions2.Y) / 2);
+                    spriteBatch.DrawString(font36, "Play  ", playTextPosition2, Color.White);
+                    Rectangle playIconRect2 = new Rectangle(
+                        (int)(Game1.gameContentRect.X + Game1.gameContentRect.Width / 2.0 + playTextureDimensions2.X / 2.0 - playIconDimensions2.X / 2.0),
+                        (int)(Game1.gameContentRect.Y + Game1.gameContentRect.Height / 2.0 - (playIconDimensions2.Y) / 2.0),
+                        this.playIcon.Width, this.playIcon.Height);
+                    spriteBatch.Draw(playIcon, playIconRect2, Color.White);
                     break;
                 default:
                     //TODO: logging
