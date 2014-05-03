@@ -50,7 +50,7 @@ namespace Break_em_All
         public void Draw(SpriteBatch spriteBatch)
         {
             if (isAlive)
-                spriteBatch.Draw(texture, location, tint);
+                spriteBatch.Draw(texture, location, tint * 0.9f);
         }
     }
 }

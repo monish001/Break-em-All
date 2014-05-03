@@ -33,6 +33,8 @@ namespace Break_em_All
 
         GameState gameState;
 
+        Background background;
+
         // Used for adding new bricks every x seconds.
         TimeSpan oldElapsedGameTime;
 
@@ -80,7 +82,7 @@ namespace Break_em_All
             ballPaddleCollisionSound = Content.Load<SoundEffect>("sound/smallBeep2");
             brickBallCollisionSound = Content.Load<SoundEffect>("sound/explosion");
 
-            brickImage = Content.Load<Texture2D>("brick");
+            brickImage = Content.Load<Texture2D>("brickTranslucent");
 
             var availScreenWidthForGame = graphics.PreferredBackBufferWidth /* height for ad unit - 300*50 320*50 480*80 640*100 */;
             screenRectangle = new Rectangle(
@@ -89,7 +91,7 @@ namespace Break_em_All
              availScreenWidthForGame - availScreenWidthForGame % brickImage.Width,
              graphics.PreferredBackBufferHeight);
 
-            Texture2D paddleTexture = Content.Load<Texture2D>("paddle");
+            Texture2D paddleTexture = Content.Load<Texture2D>("paddleTranslucent");
             paddle = new Paddle(paddleTexture, screenRectangle);
 
             Texture2D ballTexture = Content.Load<Texture2D>("ball");
@@ -100,6 +102,12 @@ namespace Break_em_All
             bricksWide = screenRectangle.Width / brickImage.Width;
 
             font = Content.Load<SpriteFont>("Kootenay");
+
+            //Texture2D backgroundTexture = Content.Load<Texture2D>("XNA_pow2");
+            Texture2D backgroundTexture = Content.Load<Texture2D>("backgroundNebula256x256Blended");
+            Rectangle backgroundTextureBounds = new Rectangle(0, 0, backgroundTexture.Width, backgroundTexture.Height);
+
+            background = new Background(backgroundTexture, backgroundTextureBounds, screenRectangle);
 
             this.gameState = GameState.START;
 
@@ -177,6 +185,8 @@ namespace Break_em_All
             // Allows the game to exit
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
+
+            background.Update(gameTime);
 
             switch (this.gameState)
             {
@@ -273,18 +283,17 @@ namespace Break_em_All
         {
             GraphicsDevice.Clear(Color.Black);
 
-            // TODO: Add your drawing code here
-            spriteBatch.Begin();
+            //spriteBatch.Begin();
+            //spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.Opaque, SamplerState.LinearWrap, null, null);
+            spriteBatch.Begin(SpriteSortMode.FrontToBack, BlendState.Opaque, SamplerState.LinearWrap,
+                DepthStencilState.Default, RasterizerState.CullNone);
+            
+            //Draw background image
+            background.Draw(spriteBatch);
 
-            Texture2D rect = new Texture2D(GraphicsDevice, screenRectangle.Width, screenRectangle.Height);
+            spriteBatch.End();
 
-            Color[] data = new Color[screenRectangle.Width * screenRectangle.Height];
-            for (int i = 0; i < data.Length; ++i)
-                data[i] = Color.CornflowerBlue;
-            rect.SetData(data);
-
-            spriteBatch.Draw(rect, new Vector2(screenRectangle.X, screenRectangle.Y), Color.CornflowerBlue);
-
+            spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend);
             switch (this.gameState)
             {
                 case GameState.START:

@@ -1,0 +1,16 @@
+FEATURES
+Following is the list of features that could be incorporated in the game. These would be tracked in a feature tracking software soon.
+> UI Theme upgrade.
+> Update components based on time elapsed.
+
+> Spaces/pattern inside the game.
+> Full grid should move down and new bricks should add from top.
+
+
+> Feature: Implement highscore.
+> Feature: Props on multi-brick break.
+> Feature: Audio for animations
+> Feature: Animations for ball, paddle and brick blasts.
+
+BUGS:
+> When ball hits middle of two bricks, the ball changes directions twice. Hence, keeping the same direction. Expected behaviour: Ball should bounce ball or change direction.

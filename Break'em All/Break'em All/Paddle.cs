@@ -9,9 +9,7 @@ namespace Break_em_All
     {
         Vector2 position;
         Vector2 motion;
-        float paddleSpeed = 30f;
-        //KeyboardState keyboardState;
-        //GamePadState gamePadState;
+
         Accelerometer accelSensor;
         Boolean accelActive = false;
         Vector3 accelReading = new Vector3();
@@ -41,12 +39,12 @@ namespace Break_em_All
                 accelSensor.Start();
                 accelActive = true;
             }
-            catch (AccelerometerFailedException e)
+            catch (AccelerometerFailedException)
             {
                 // the accelerometer couldn't be started.  No fun!
                 accelActive = false;
             }
-            catch (UnauthorizedAccessException e)
+            catch (UnauthorizedAccessException)
             {
                 // This exception is thrown in the emulator-which doesn't support an accelerometer.
                 accelActive = false;
@@ -64,35 +62,6 @@ namespace Break_em_All
         {
             motion = Vector2.Zero;
             motion.X = delta.X;
-            //keyboardState = Keyboard.GetState();
-            //gamePadState = GamePad.GetState(PlayerIndex.One);
-            //if (
-            //    keyboardState.IsKeyDown(Keys.Left) ||
-            //gamePadState.IsButtonDown(Buttons.LeftThumbstickLeft) ||
-            //gamePadState.IsButtonDown(Buttons.DPadLeft) ||
-            //accelReading.Y > 0
-            //    )
-            //    motion.X = -1;
-
-            //if (
-            //    keyboardState.IsKeyDown(Keys.Right) ||
-            //gamePadState.IsButtonDown(Buttons.LeftThumbstickRight) ||
-            //gamePadState.IsButtonDown(Buttons.DPadRight) ||
-            //accelReading.Y < 0
-            //    )
-            //    motion.X = 1;
-
-            //if (accelReading.X * accelReading.Y < 0)
-            //    motion.X = -1;
-            //else
-            //    motion.X = 1;
-
-            //var x = accelReading.Y;
-            //var factor = (float)(-5 / System.Math.Log(x < 0 ? -x : x));// |-k / logx|
-            //var factor2 = x * x * x * (x < 0 ? -1 : 1);// |x^3|
-            //var factor3 = paddleSpeed * x;
-
-            //motion.X *= (float.IsNaN(factor) ? 0 : factor);//paddleSpeed;
             position += motion;
             LockPaddle();
         }
@@ -113,7 +82,7 @@ namespace Break_em_All
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(texture, position, Color.White);
+            spriteBatch.Draw(texture, position, Color.Blue * 0.9f);
         }
 
         public Rectangle GetBounds()
@@ -134,7 +103,7 @@ namespace Break_em_All
                 {
                     accelSensor.Stop();
                 }
-                catch (AccelerometerFailedException e)
+                catch (AccelerometerFailedException)
                 {
                     // the accelerometer couldn't be stopped now.
                 }
