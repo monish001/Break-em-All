@@ -1,10 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Audio;
+using Microsoft.Xna.Framework.Graphics;
+using System;
 namespace Break_em_All
 {
     class Ball
@@ -75,7 +72,7 @@ namespace Break_em_All
         }
         public bool OffBottom()
         {
-            if (position.Y > screenBounds.Height)
+            if (position.Y > screenBounds.Y + screenBounds.Height)
                 return true;
             return false;
         }

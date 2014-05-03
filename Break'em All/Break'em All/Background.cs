@@ -1,13 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Audio;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Media;
+using System;
 
 
 namespace Break_em_All
@@ -18,7 +11,7 @@ namespace Break_em_All
     public class Background
     {
         Texture2D texture;
-        Rectangle screenBounds, textureBounds;
+        Rectangle textureBounds;
 
         /// <summary>
         /// this represents the starting point from the texture that is rendered as background.
@@ -30,11 +23,9 @@ namespace Break_em_All
         /// </summary>
         /// <param name="texture">represents background image which will be used as background in full of part.</param>
         /// <param name="textureBounds">represents part of texture that should be used as background.</param>
-        /// <param name="screenBounds">represents part of screen where background should be rendered.</param>
-        public Background(Texture2D texture, Rectangle textureBounds, Rectangle screenBounds)
+        public Background(Texture2D texture, Rectangle textureBounds)
         {
             this.texture = texture;
-            this.screenBounds = screenBounds;
             this.textureBounds = textureBounds;
             this.currentSourcePosition = new Vector2(textureBounds.X, textureBounds.Y);
         }
@@ -62,7 +53,7 @@ namespace Break_em_All
         {
             // Moving the starting point for source texture.
             Rectangle sourceTexture = new Rectangle((int)this.currentSourcePosition.X, (int)this.currentSourcePosition.Y, this.textureBounds.Width, this.textureBounds.Height);
-            spriteBatch.Draw(this.texture, screenBounds, sourceTexture, Color.White * opacity);
+            spriteBatch.Draw(this.texture, Game1.gameContentRect, sourceTexture, Color.White * opacity);
         }
     }
 }

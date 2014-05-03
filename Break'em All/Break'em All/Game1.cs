@@ -14,32 +14,37 @@ namespace Break_em_All
     /// </summary>
     public class Game1 : Microsoft.Xna.Framework.Game
     {
-        GraphicsDeviceManager graphics;
-        SpriteBatch spriteBatch;
+        private GraphicsDeviceManager graphics;
+        private SpriteBatch spriteBatch;
 
-        Paddle paddle;
-        Ball ball;
+        private Paddle paddleObj;
+        private Ball ballObj;
 
-        int bricksWide;
-        int bricksHigh;
-        Texture2D brickImage;
-        Brick[,] bricks;
+        int numBricksInX;
+        int numBricksInY;
+        private Texture2D brickTexture;
+        private Brick[,] bricksArray;
 
-        Rectangle screenRectangle;
-        private int score;
+        public static Rectangle gameContentRect;
+        private int gameScore;
 
         // The font used to display UI elements
-        SpriteFont font;
+        private SpriteFont font;
 
-        GameState gameState;
+        private GameState gameState;
 
-        Background background;
+        private Background backgroundObj;
 
         // Used for adding new bricks every x seconds.
-        TimeSpan oldElapsedGameTime;
+        private TimeSpan oldElapsedGameTime;
 
-        SoundEffect ballPaddleCollisionSound;
-        SoundEffect brickBallCollisionSound;
+        private SoundEffect ballPaddleCollisionSound;
+        private SoundEffect brickBallCollisionSound;
+
+        //// Advertisement
+        private static readonly string applicationIdStr = "test_client";
+        private static readonly string adUnitIdStr = "Image320_50"; //other test values: Image480_80, Image300_50, TextAd
+        private Advertisement advertisement;
 
         public Game1()
         {
@@ -67,6 +72,11 @@ namespace Break_em_All
         {
             TouchPanel.EnabledGestures = GestureType.Tap;
 
+            Advertisement.Initialize(this, applicationIdStr);
+
+            // Create a new SpriteBatch, which can be used to draw textures.
+            this.spriteBatch = new SpriteBatch(GraphicsDevice);
+
             base.Initialize();
         }
 
@@ -76,38 +86,44 @@ namespace Break_em_All
         /// </summary>
         protected override void LoadContent()
         {
-            // Create a new SpriteBatch, which can be used to draw textures.
-            spriteBatch = new SpriteBatch(GraphicsDevice);
+            this.ballPaddleCollisionSound = Content.Load<SoundEffect>("sound/smallBeep2");
+            this.brickBallCollisionSound = Content.Load<SoundEffect>("sound/explosion");
+            this.font = Content.Load<SpriteFont>("Kootenay");
+            this.brickTexture = Content.Load<Texture2D>("brickTranslucent");
 
-            ballPaddleCollisionSound = Content.Load<SoundEffect>("sound/smallBeep2");
-            brickBallCollisionSound = Content.Load<SoundEffect>("sound/explosion");
-
-            brickImage = Content.Load<Texture2D>("brickTranslucent");
-
-            var availScreenWidthForGame = graphics.PreferredBackBufferWidth /* height for ad unit - 300*50 320*50 480*80 640*100 */;
-            screenRectangle = new Rectangle(
-             0,
-             0,
-             availScreenWidthForGame - availScreenWidthForGame % brickImage.Width,
-             graphics.PreferredBackBufferHeight);
+            // Initialize dimensions fo game content. brickTexture.Width is used here as gameContent.Width should be N * brickTexture.Width.
+            var availScreenWidthForGame = this.graphics.PreferredBackBufferWidth;
+            var paddingInDirectionX = availScreenWidthForGame % this.brickTexture.Width; // This value of padding will be divided on either side.
+            var actualScreenWidthUsedForGame = availScreenWidthForGame - paddingInDirectionX;
+            var availScreenHeightForGame = this.graphics.PreferredBackBufferHeight;
+            Game1.gameContentRect = new Rectangle( // TODO: center the rectangle.
+             (paddingInDirectionX / 2) + (paddingInDirectionX % 2), 0, // position on screen from where onwards (inclusive), game components could be drawn.
+             actualScreenWidthUsedForGame,
+             availScreenHeightForGame);
+            // Now create an actual ad for display.
+            // Create a banner ad for the game. Advertisement is shown below the game content.
+            int adUnitWidth = 320, adUnitHeight = 50;
+            Rectangle adUnitRect = new Rectangle(
+                (GraphicsDevice.Viewport.Bounds.Width - adUnitWidth) / 2, // centered on the display
+                Game1.gameContentRect.Y + Game1.gameContentRect.Height - adUnitHeight,
+                adUnitWidth, adUnitHeight);
+            this.advertisement = new Advertisement(adUnitRect, applicationIdStr, adUnitIdStr);
 
             Texture2D paddleTexture = Content.Load<Texture2D>("paddleTranslucent");
-            paddle = new Paddle(paddleTexture, screenRectangle);
+            this.paddleObj = new Paddle(paddleTexture, Game1.gameContentRect);
 
             Texture2D ballTexture = Content.Load<Texture2D>("ball");
-            ball = new Ball(ballTexture, screenRectangle);
+            this.ballObj = new Ball(ballTexture, Game1.gameContentRect);
 
             //initialize number of brick slots on the screen.
-            bricksHigh = (screenRectangle.Height - paddleTexture.Height - ballTexture.Height) / brickImage.Height;
-            bricksWide = screenRectangle.Width / brickImage.Width;
-
-            font = Content.Load<SpriteFont>("Kootenay");
+            this.numBricksInY = (Game1.gameContentRect.Height - paddleTexture.Height - ballTexture.Height) / this.brickTexture.Height;
+            this.numBricksInX = Game1.gameContentRect.Width / this.brickTexture.Width;
 
             //Texture2D backgroundTexture = Content.Load<Texture2D>("XNA_pow2");
             Texture2D backgroundTexture = Content.Load<Texture2D>("backgroundNebula256x256Blended");
             Rectangle backgroundTextureBounds = new Rectangle(0, 0, backgroundTexture.Width, backgroundTexture.Height);
 
-            background = new Background(backgroundTexture, backgroundTextureBounds, screenRectangle);
+            backgroundObj = new Background(backgroundTexture, backgroundTextureBounds);
 
             this.gameState = GameState.START;
 
@@ -119,11 +135,11 @@ namespace Break_em_All
         /// </summary>
         private void StartGame()
         {
-            paddle.SetInStartPosition();
-            ball.SetInStartPosition(paddle.GetBounds());
+            paddleObj.SetInStartPosition();
+            ballObj.SetInStartPosition(paddleObj.GetBounds());
 
-            bricks = new Brick[bricksWide, bricksHigh];
-            for (int y = 0; y < bricksHigh; y++)
+            bricksArray = new Brick[numBricksInX, numBricksInY];
+            for (int y = 0; y < numBricksInY; y++)
             {
                 Color tint = Color.White;
                 switch (y % 5)
@@ -144,24 +160,24 @@ namespace Break_em_All
                         tint = Color.Purple;
                         break;
                 }
-                for (int x = 0; x < bricksWide; x++)
+                for (int x = 0; x < numBricksInX; x++)
                 {
                     var isBrickAlive = (y < 5);
 
-                    bricks[x, y] = new Brick(
-                    brickImage,
+                    bricksArray[x, y] = new Brick(
+                    brickTexture,
                     new Rectangle(
-                    x * brickImage.Width + screenRectangle.X,
-                    y * brickImage.Height + screenRectangle.Y,
-                    brickImage.Width,
-                    brickImage.Height),
+                    x * brickTexture.Width + gameContentRect.X,
+                    y * brickTexture.Height + gameContentRect.Y,
+                    brickTexture.Width,
+                    brickTexture.Height),
                     tint,
                     isBrickAlive);
                 }
             }
 
             //Initialize score with 0
-            this.score = 0;
+            this.gameScore = 0;
 
         }
 
@@ -172,7 +188,7 @@ namespace Break_em_All
         protected override void UnloadContent()
         {
             // TODO: Unload any non ContentManager content here
-            paddle.Dispose();
+            paddleObj.Dispose();
         }
 
         /// <summary>
@@ -186,7 +202,7 @@ namespace Break_em_All
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
 
-            background.Update(gameTime);
+            backgroundObj.Update(gameTime);
 
             switch (this.gameState)
             {
@@ -206,29 +222,29 @@ namespace Break_em_All
                         GestureSample gesture = TouchPanel.ReadGesture();
                         if (gesture.GestureType == GestureType.HorizontalDrag)
                         {
-                            paddle.Update(gesture.Delta);
+                            paddleObj.Update(gesture.Delta);
                         }
                     }
 
                     // Update the ball position
-                    ball.Update(gameTime);
+                    ballObj.Update(gameTime);
 
                     // Add the new brick before checking for collision with the ball.
                     if (oldElapsedGameTime.TotalMilliseconds > 1000)
                     {
                         oldElapsedGameTime = new TimeSpan(0);
                         Random rand = new Random();
-                        var brickNumberX = rand.Next(0, this.bricksWide);
+                        var brickNumberX = rand.Next(0, this.numBricksInX);
                         for (int brickNumberY = 0; ; brickNumberY++)
                         {
-                            if (brickNumberY == bricksHigh)
+                            if (brickNumberY == numBricksInY)
                             {
                                 this.gameState = GameState.END;
                                 TouchPanel.EnabledGestures = GestureType.Tap;
                                 break;
                             }
 
-                            var currentBrick = bricks[brickNumberX, brickNumberY];
+                            var currentBrick = bricksArray[brickNumberX, brickNumberY];
                             if (currentBrick.getIsAlive() == false)
                             {
                                 currentBrick.toggleIsAlive();
@@ -240,16 +256,16 @@ namespace Break_em_All
                         oldElapsedGameTime += gameTime.ElapsedGameTime;
 
                     // Check brick and ball collisions. Update scores
-                    foreach (Brick brick in bricks)
+                    foreach (Brick brick in bricksArray)
                     {
-                        var isBrickCollided = brick.CheckCollision(ball, brickBallCollisionSound);
+                        var isBrickCollided = brick.CheckCollision(ballObj, brickBallCollisionSound);
                         if (isBrickCollided)
-                            this.score += 10;
+                            this.gameScore += 10;
                     }
-                    ball.PaddleCollision(paddle.GetBounds(), ballPaddleCollisionSound);
+                    ballObj.PaddleCollision(paddleObj.GetBounds(), ballPaddleCollisionSound);
 
                     //If ball is fallen, end the game.
-                    if (ball.OffBottom())
+                    if (ballObj.OffBottom())
                     {
                         this.gameState = GameState.END;
                         TouchPanel.EnabledGestures = GestureType.Tap;
@@ -287,46 +303,64 @@ namespace Break_em_All
             //spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.Opaque, SamplerState.LinearWrap, null, null);
             spriteBatch.Begin(SpriteSortMode.FrontToBack, BlendState.Opaque, SamplerState.LinearWrap,
                 DepthStencilState.Default, RasterizerState.CullNone);
-            
+
             switch (this.gameState)
             {
                 case GameState.START:
+                    // Set the gameContentRect height
+                    Game1.gameContentRect.Height = this.graphics.PreferredBackBufferHeight;
+
+                    //hide ads
+                    advertisement.setVisible(false);
+
                     //Draw background image
-                    background.Draw(spriteBatch, 0.5f);
+                    backgroundObj.Draw(spriteBatch, 0.5f);
                     spriteBatch.End();
                     spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend);
 
                     // Draw 'play'
                     var playTexture = font.MeasureString("Play");
-                    spriteBatch.DrawString(font, "Play", new Vector2(screenRectangle.X + screenRectangle.Width / 2 - playTexture.X / 2, screenRectangle.Y + screenRectangle.Height / 2 - playTexture.Y / 2), Color.White);
+                    spriteBatch.DrawString(font, "Play", new Vector2(gameContentRect.X + gameContentRect.Width / 2 - playTexture.X / 2, gameContentRect.Y + gameContentRect.Height / 2 - playTexture.Y / 2), Color.White);
                     break;
                 case GameState.RUNNING:
+                    // Set the gameContentRect height
+                    Game1.gameContentRect.Height = this.graphics.PreferredBackBufferHeight;
+
+                    //hide ads
+                    advertisement.setVisible(false);
+
                     //Draw background image
-                    background.Draw(spriteBatch, 1f);
+                    backgroundObj.Draw(spriteBatch, 1f);
                     spriteBatch.End();
                     spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
 
-                    paddle.Draw(spriteBatch);
+                    paddleObj.Draw(spriteBatch);
 
-                    ball.Draw(spriteBatch);
-                    foreach (Brick brick in bricks)
+                    ballObj.Draw(spriteBatch);
+                    foreach (Brick brick in bricksArray)
                         brick.Draw(spriteBatch);
 
                     // Draw the score
-                    spriteBatch.DrawString(font, "Score: " + score, new Vector2(GraphicsDevice.Viewport.TitleSafeArea.X + screenRectangle.X, GraphicsDevice.Viewport.TitleSafeArea.Y + screenRectangle.Y), Color.White);
+                    spriteBatch.DrawString(font, "Score: " + gameScore, new Vector2(GraphicsDevice.Viewport.TitleSafeArea.X + gameContentRect.X, GraphicsDevice.Viewport.TitleSafeArea.Y + gameContentRect.Y), Color.White);
 
                     break;
                 case GameState.END:
+                    // Set the gameContentRect height as per ad unit height
+                    Game1.gameContentRect.Height = this.graphics.PreferredBackBufferHeight - 50;
+
+                    //Show ads
+                    advertisement.setVisible(true);
+
                     //Draw background image
-                    background.Draw(spriteBatch, 0.5f);
+                    backgroundObj.Draw(spriteBatch, 0.5f);
                     spriteBatch.End();
                     spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend);
 
                     // Draw 'play again'
-                    var scoreTexture = font.MeasureString("Score: " + this.score);
-                    spriteBatch.DrawString(font, "Score: " + this.score, new Vector2(screenRectangle.X + screenRectangle.Width / 2 - scoreTexture.X / 2, screenRectangle.Y + screenRectangle.Height / 2 - 2 * scoreTexture.Y), Color.White);
+                    var scoreTexture = font.MeasureString("Score: " + this.gameScore);
+                    spriteBatch.DrawString(font, "Score: " + this.gameScore, new Vector2(gameContentRect.X + gameContentRect.Width / 2 - scoreTexture.X / 2, gameContentRect.Y + gameContentRect.Height / 2 - 2 * scoreTexture.Y), Color.White);
                     var playAgainTexture = font.MeasureString("Play Again");
-                    spriteBatch.DrawString(font, "Play Again", new Vector2(screenRectangle.X + screenRectangle.Width / 2 - playAgainTexture.X / 2, screenRectangle.Y + screenRectangle.Height / 2 - playAgainTexture.Y / 2), Color.White);
+                    spriteBatch.DrawString(font, "Play Again", new Vector2(gameContentRect.X + gameContentRect.Width / 2 - playAgainTexture.X / 2, gameContentRect.Y + gameContentRect.Height / 2 - playAgainTexture.Y / 2), Color.White);
                     break;
                 default:
                     //TODO: logging
@@ -337,6 +371,15 @@ namespace Break_em_All
             spriteBatch.End();
 
             base.Draw(gameTime);
+        }
+
+        /// <summary>
+        /// Clean up the Advertisement
+        /// </summary>
+        protected override void Dispose(bool disposing)
+        {
+            base.Dispose(disposing);
+            advertisement.Dispose(disposing);
         }
     }
 }

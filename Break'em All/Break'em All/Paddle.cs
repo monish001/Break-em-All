@@ -1,7 +1,6 @@
 using Microsoft.Devices.Sensors;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 using System;
 namespace Break_em_All
 {
@@ -76,8 +75,8 @@ namespace Break_em_All
 
         public void SetInStartPosition()
         {
-            position.X = (screenBounds.Width - texture.Width) / 2;
-            position.Y = screenBounds.Height - texture.Height - 5;
+            position.X = screenBounds.X + (screenBounds.Width - texture.Width) / 2;
+            position.Y = screenBounds.Y + screenBounds.Height - texture.Height - 5;
         }
 
         public void Draw(SpriteBatch spriteBatch)

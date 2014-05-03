@@ -1,16 +1,21 @@
 FEATURES
 Following is the list of features that could be incorporated in the game. These would be tracked in a feature tracking software soon.
-> UI Theme upgrade.
-> Update components based on time elapsed. DONE
+NEXT RELEASE:
+> UI Theme upgrade. Background improvement remaining.
+> Update components based on time elapsed. DONE	
+> Bug fix: ad not getting clicked.
 
 > Spaces/patterns inside the game.
 > Full grid should move down and new bricks should add from top.
 
+> Feature: Find direction of ball based on where it hits the paddle. Also, update paddle image to show curves.
+> Feature: Make the background movement in x direction SMOOTH.
 > Feature: Localization (of text).
 > Feature: Implement highscore.
 > Feature: Props on multi-brick break.
 > Feature: Audio for animations
 > Feature: Animations for ball, paddle and brick blasts.
+> Feature: Hide ads if user share the game.
 
 BUGS:
 > When ball hits middle of two bricks, the ball changes directions twice. Hence, keeping the same direction. Expected behaviour: Ball should bounce ball or change direction.
