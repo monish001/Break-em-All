@@ -1,9 +1,9 @@
 FEATURES
 Following is the list of features that could be incorporated in the game. These would be tracked in a feature tracking software soon.
-NEXT RELEASE:
+Version 1.1.0.0:
 > UI Theme upgrade. Background improvement remaining.
 > Update components based on time elapsed. DONE	
-> Bug fix: ad not getting clicked.
+> Bug fix: ad not getting clicked. DONE. base.Update was not getting called properly.
 
 > Spaces/patterns inside the game.
 > Full grid should move down and new bricks should add from top.
