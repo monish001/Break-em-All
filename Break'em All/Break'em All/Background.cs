@@ -36,8 +36,13 @@ namespace Break_em_All
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         public void Update(GameTime gameTime)
         {
-            var sign = (new Random()).Next(0, 2) == 0 ? -1 : 1;
-            var speedVec = new Vector2(sign * 0.03F, 0.05F); // pixels per millisecond
+            //var sign = (new Random()).Next(0, 2) == 0 ? -1 : 1;
+            //var speedVec = new Vector2(sign * 0.03F, 0.05F); // pixels per millisecond
+
+            var speedComponentX = (float)Math.Sin(gameTime.TotalGameTime.TotalMilliseconds * 0.0001); // Smaller the input to the Sin function, bigger are the osscilations of backgroundTexture.
+            var speedVec = new Vector2(speedComponentX * 0.1f, 0.05F); // pixels per millisecond
+
+
             this.currentSourcePosition += (gameTime.ElapsedGameTime.Milliseconds * speedVec);
             if (this.currentSourcePosition.X >= texture.Width)
                 this.currentSourcePosition.X = 0;

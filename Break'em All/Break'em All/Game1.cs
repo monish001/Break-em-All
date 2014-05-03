@@ -88,8 +88,8 @@ namespace Break_em_All
         /// </summary>
         protected override void LoadContent()
         {
-            this.ballPaddleCollisionSound = Content.Load<SoundEffect>("sound/smallBeep2");
-            this.brickBallCollisionSound = Content.Load<SoundEffect>("sound/explosion");
+            this.ballPaddleCollisionSound = Content.Load<SoundEffect>("sound/beep1");
+            this.brickBallCollisionSound = Content.Load<SoundEffect>("sound/beep6");
             this.font = Content.Load<SpriteFont>("Kootenay");
             this.brickTexture = Content.Load<Texture2D>("brickTranslucent");
 
@@ -122,9 +122,8 @@ namespace Break_em_All
             this.numBricksInX = Game1.gameContentRect.Width / this.brickTexture.Width;
 
             //Texture2D backgroundTexture = Content.Load<Texture2D>("XNA_pow2");
-            Texture2D backgroundTexture = Content.Load<Texture2D>("backgroundNebula256x256Blended");
+            Texture2D backgroundTexture = Content.Load<Texture2D>("stars256x256");
             Rectangle backgroundTextureBounds = new Rectangle(0, 0, backgroundTexture.Width, backgroundTexture.Height);
-
             backgroundObj = new Background(backgroundTexture, backgroundTextureBounds);
 
             this.gameState = GameState.START;

@@ -4,6 +4,7 @@ Version 1.1.0.0:
 > UI Theme upgrade. Background improvement remaining.
 > Update components based on time elapsed. DONE	
 > Bug fix: ad not getting clicked. DONE. base.Update was not getting called properly.
+> Bug fix: Game exits as soon as it is opened. DONE. This was because for background image should be 2^N pixels wide and long (due to tiling).
 
 > Spaces/patterns inside the game.
 > Full grid should move down and new bricks should add from top.
