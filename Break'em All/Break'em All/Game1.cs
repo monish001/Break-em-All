@@ -378,7 +378,7 @@ namespace Break_em_All
                     //Show ads
                     advertisement.setVisible(true);
 
-                    //Draw background image
+                    // Draw background image
                     backgroundObj.Draw(spriteBatch, 0.5f);
                     spriteBatch.End();
                     spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend);
@@ -399,7 +399,7 @@ namespace Break_em_All
                     spriteBatch.Draw(playIcon, playIconRect2, Color.White);
                     break;
                 default:
-                    //TODO: logging
+                    // TODO: logging
                     break;
             }
 

@@ -7,10 +7,12 @@ Version 1.1.0.0:
 > Update components based on time elapsed. DONE	
 > Bug fix: ad not getting clicked. DONE. base.Update was not getting called properly.
 > Bug fix: Game exits as soon as it is opened. DONE. This was because for background image should be 2^N pixels wide and long (due to tiling).
-> UI Theme upgrade. Add game title and icons for play, replay and highscore. IN PROGRESS.
+
+Version 1.2.0.0:
+> UI Theme upgrade. Add game title and icons (instead of text) for play, replay and highscore. IN PROGRESS.
 > Feature: Implement highscore (user can see his highscores). IN PROGRESS.
 
-Version 1.2.0.0 and onwards:
+Version 1.3.0.0 and onwards:
 > Feature: Implement global highscores.
 > Feature: Levels having patterns of spaces inside the bricks.
 > Feature Suggestion: Full grid should move down and new bricks should add from top.
@@ -21,6 +23,7 @@ Version 1.2.0.0 and onwards:
 > Feature: Audio for animations
 > Feature: Animations for ball, paddle and brick blasts.
 > Feature: Hide ads if user share the game.
+> Feature: Show ads as big bricks and breaking these lead to powers.
 
 
 ==================================================
