@@ -1,15 +1,17 @@
-FEATURES
+==================================================
+==                   FEATURES                   ==
+==================================================
 Following is the list of features that could be incorporated in the game. These would be tracked in a feature tracking software soon.
 
 Version 1.1.0.0:
 > Update components based on time elapsed. DONE	
 > Bug fix: ad not getting clicked. DONE. base.Update was not getting called properly.
 > Bug fix: Game exits as soon as it is opened. DONE. This was because for background image should be 2^N pixels wide and long (due to tiling).
-> UI Theme upgrade. Background improvement remaining. IN PROGRESS. START and END state screens remaining.
-> Feature: Implement highscore.
-
+> UI Theme upgrade. Add game title and icons for play, replay and highscore. IN PROGRESS.
+> Feature: Implement highscore (user can see his highscores). IN PROGRESS.
 
 Version 1.2.0.0 and onwards:
+> Feature: Implement global highscores.
 > Feature: Levels having patterns of spaces inside the bricks.
 > Feature Suggestion: Full grid should move down and new bricks should add from top.
 > Feature: Find direction of ball based on where it hits the paddle. Also, update paddle image to show curves.
@@ -20,5 +22,8 @@ Version 1.2.0.0 and onwards:
 > Feature: Animations for ball, paddle and brick blasts.
 > Feature: Hide ads if user share the game.
 
-BUGS:
+
+==================================================
+==                    BUGS                      ==
+==================================================
 > When ball hits middle of two bricks, the ball changes directions twice. Hence, keeping the same direction. Expected behaviour: Ball should bounce ball or change direction.
