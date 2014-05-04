@@ -6,17 +6,14 @@ Windows phone game - a variation of popular game 'breaking out'
 Link in the windows phone store: http://www.windowsphone.com/en-us/store/app/break-em-all/a3b8a457-bf72-4525-bbb3-bf0cfd3d08dc
 
 Description for the Store:
-Get maximum score by breaking as many bricks as possible. Go, break'em all!!
+Break'em All is a modern twist to the retro arcade game, Breakout/DX-ball. The idea is to stay alive as long as possible - scoring as much as you can by destroying bricks. As you play the game, it gets challenging as the speed of the ball increases gradually.
 
 Description of update:
-> Bricks break when ball hit them.
-> Ball deflects when gets hit on paddle.
-> Score increase for each brick break.
-> New bricks pops up regularly to make the game interesting.
+Upgraded UI and audio.
 
 Keywords:
-> break out
-> breaking out
-> paddle bricks ball
-> brick break
+> top free
+> breakout
 > dxball
+> brick breaking
+> Arkanoid
