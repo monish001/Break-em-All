@@ -20,7 +20,204 @@
    inkscape:version="0.48.4 r9939"
    sodipodi:docname="1000x800.svg">
   <defs
-     id="defs3048" />
+     id="defs3048">
+    <filter
+       id="filter3028-1"
+       inkscape:menu-tooltip="3D warped, fibered wood texture"
+       inkscape:menu="Materials"
+       inkscape:label="3D wood"
+       height="1.5"
+       y="-0.25"
+       width="1.5"
+       x="-0.25"
+       color-interpolation-filters="sRGB">
+      <feGaussianBlur
+         id="feGaussianBlur3030-7"
+         result="result8"
+         stdDeviation="4" />
+      <feTurbulence
+         id="feTurbulence3032-4"
+         baseFrequency="0.025 0.2"
+         numOctaves="3"
+         type="fractalNoise"
+         result="result7"
+         seed="22" />
+      <feComposite
+         id="feComposite3034-0"
+         in2="result8"
+         operator="in"
+         in="SourceGraphic"
+         result="result6" />
+      <feDisplacementMap
+         id="feDisplacementMap3036-9"
+         in2="result6"
+         result="result4"
+         scale="50"
+         yChannelSelector="A"
+         xChannelSelector="A"
+         in="result7" />
+      <feFlood
+         id="feFlood3038-4"
+         flood-color="rgb(230,211,138)"
+         flood-opacity="1"
+         in="result4"
+         result="result9" />
+      <feComposite
+         id="feComposite3040-8"
+         in2="result4"
+         operator="atop"
+         result="result2" />
+      <feComposite
+         id="feComposite3042-8"
+         in2="SourceGraphic"
+         operator="atop"
+         in="result2"
+         result="result9" />
+      <feGaussianBlur
+         id="feGaussianBlur3044-2"
+         result="result0"
+         in="result9"
+         stdDeviation="8" />
+      <feSpecularLighting
+         id="feSpecularLighting3046-4"
+         specularExponent="15"
+         specularConstant="0.69999999"
+         surfaceScale="5"
+         lighting-color="#ffffff"
+         result="result1"
+         in="result0">
+        <feDistantLight
+           id="feDistantLight3048-5"
+           azimuth="235"
+           elevation="50" />
+      </feSpecularLighting>
+      <feComposite
+         id="feComposite3050-5"
+         in2="result9"
+         operator="in"
+         result="result2"
+         in="result1" />
+      <feComposite
+         k4="0"
+         k1="0"
+         id="feComposite3052-1"
+         in2="result2"
+         k3="0.5"
+         k2="0.5"
+         operator="arithmetic"
+         result="result4"
+         in="result9" />
+      <feConvolveMatrix
+         id="feConvolveMatrix3054-7"
+         order="3 3"
+         kernelMatrix="2 0 0 0 2 0 0 0 -2 "
+         targetX="2"
+         targetY="2"
+         result="result10" />
+      <feBlend
+         id="feBlend3056-1"
+         in2="result10"
+         mode="multiply"
+         in="result10" />
+    </filter>
+    <filter
+       id="filter3035"
+       inkscape:menu-tooltip="3D warped, fibered wood texture"
+       inkscape:menu="Materials"
+       inkscape:label="3D wood"
+       height="1.5"
+       y="-0.25"
+       width="1.5"
+       x="-0.25"
+       color-interpolation-filters="sRGB">
+      <feGaussianBlur
+         id="feGaussianBlur3037"
+         result="result8"
+         stdDeviation="4" />
+      <feTurbulence
+         id="feTurbulence3039"
+         baseFrequency="0.025 0.2"
+         numOctaves="3"
+         type="fractalNoise"
+         result="result7"
+         seed="22" />
+      <feComposite
+         id="feComposite3041"
+         in2="result8"
+         operator="in"
+         in="SourceGraphic"
+         result="result6" />
+      <feDisplacementMap
+         id="feDisplacementMap3043"
+         in2="result6"
+         result="result4"
+         scale="50"
+         yChannelSelector="A"
+         xChannelSelector="A"
+         in="result7" />
+      <feFlood
+         id="feFlood3045"
+         flood-color="rgb(230,211,138)"
+         flood-opacity="1"
+         in="result4"
+         result="result9" />
+      <feComposite
+         id="feComposite3047"
+         in2="result4"
+         operator="atop"
+         result="result2" />
+      <feComposite
+         id="feComposite3049"
+         in2="SourceGraphic"
+         operator="atop"
+         in="result2"
+         result="result9" />
+      <feGaussianBlur
+         id="feGaussianBlur3051"
+         result="result0"
+         in="result9"
+         stdDeviation="8" />
+      <feSpecularLighting
+         id="feSpecularLighting3053"
+         specularExponent="15"
+         specularConstant="0.7"
+         surfaceScale="5"
+         lighting-color="rgb(255,255,255)"
+         result="result1"
+         in="result0">
+        <feDistantLight
+           id="feDistantLight3055"
+           azimuth="235"
+           elevation="50" />
+      </feSpecularLighting>
+      <feComposite
+         id="feComposite3057"
+         in2="result9"
+         operator="in"
+         result="result2"
+         in="result1" />
+      <feComposite
+         id="feComposite3059"
+         in2="result2"
+         k3="0.5"
+         k2="0.5"
+         operator="arithmetic"
+         result="result4"
+         in="result9" />
+      <feConvolveMatrix
+         id="feConvolveMatrix3061"
+         order="3 3"
+         kernelMatrix="2 0 0 0 2 0 0 0 -2 "
+         targetX="2"
+         targetY="2"
+         result="result10" />
+      <feBlend
+         id="feBlend3063"
+         in2="result10"
+         mode="multiply"
+         in="result10" />
+    </filter>
+  </defs>
   <sodipodi:namedview
      id="base"
      pagecolor="#000000"
@@ -47,7 +244,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -79,11 +276,15 @@
        height="60"
        width="240" />
     <image
-       y="845.46466"
-       x="558.57874"
-       id="image3143"
-       xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAIAAACQkWg2AAAAA3NCSVQICAjb4U/gAAAAGUlEQVQo kWP8//8/AymAiSTVoxpGNQwpDQBVbQMd5EZaEgAAAABJRU5ErkJggg== "
+       y="829.79077"
+       x="530.57147"
+       id="image3032"
+       xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABHNCSVQICAgIfAhkiAAAAEpJREFU
+OI1jZMAC/v///x+bOCMjIyOGGDEa8RkEZxCrGd0QRnI0IxvCRI5GFEPItR0GKHbBqAGDIh3AGBQl
+ZVINwZqZiDEIW3YGAK8PJBTnvghGAAAAAElFTkSuQmCC
+"
        height="32"
-       width="32" />
+       width="32"
+       style="filter:url(#filter3035)" />
   </g>
 </svg>

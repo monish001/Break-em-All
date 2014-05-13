@@ -20,7 +20,105 @@
    inkscape:version="0.48.4 r9939"
    sodipodi:docname="358x173.svg">
   <defs
-     id="defs3048" />
+     id="defs3048">
+    <filter
+       id="filter2998"
+       inkscape:menu-tooltip="3D warped, fibered wood texture"
+       inkscape:menu="Materials"
+       inkscape:label="3D wood"
+       height="1.5"
+       y="-0.25"
+       width="1.5"
+       x="-0.25"
+       color-interpolation-filters="sRGB">
+      <feGaussianBlur
+         id="feGaussianBlur3000"
+         result="result8"
+         stdDeviation="4" />
+      <feTurbulence
+         id="feTurbulence3002"
+         baseFrequency="0.025 0.2"
+         numOctaves="3"
+         type="fractalNoise"
+         result="result7"
+         seed="22" />
+      <feComposite
+         id="feComposite3004"
+         in2="result8"
+         operator="in"
+         in="SourceGraphic"
+         result="result6" />
+      <feDisplacementMap
+         id="feDisplacementMap3006"
+         in2="result6"
+         result="result4"
+         scale="50"
+         yChannelSelector="A"
+         xChannelSelector="A"
+         in="result7" />
+      <feFlood
+         id="feFlood3008"
+         flood-color="rgb(230,211,138)"
+         flood-opacity="1"
+         in="result4"
+         result="result9" />
+      <feComposite
+         id="feComposite3010"
+         in2="result4"
+         operator="atop"
+         result="result2" />
+      <feComposite
+         id="feComposite3012"
+         in2="SourceGraphic"
+         operator="atop"
+         in="result2"
+         result="result9" />
+      <feGaussianBlur
+         id="feGaussianBlur3014"
+         result="result0"
+         in="result9"
+         stdDeviation="8" />
+      <feSpecularLighting
+         id="feSpecularLighting3016"
+         specularExponent="15"
+         specularConstant="0.7"
+         surfaceScale="5"
+         lighting-color="rgb(255,255,255)"
+         result="result1"
+         in="result0">
+        <feDistantLight
+           id="feDistantLight3018"
+           azimuth="235"
+           elevation="50" />
+      </feSpecularLighting>
+      <feComposite
+         id="feComposite3020"
+         in2="result9"
+         operator="in"
+         result="result2"
+         in="result1" />
+      <feComposite
+         id="feComposite3022"
+         in2="result2"
+         k3="0.5"
+         k2="0.5"
+         operator="arithmetic"
+         result="result4"
+         in="result9" />
+      <feConvolveMatrix
+         id="feConvolveMatrix3024"
+         order="3 3"
+         kernelMatrix="2 0 0 0 2 0 0 0 -2 "
+         targetX="2"
+         targetY="2"
+         result="result10" />
+      <feBlend
+         id="feBlend3026"
+         in2="result10"
+         mode="multiply"
+         in="result10" />
+    </filter>
+  </defs>
   <sodipodi:namedview
      id="base"
      pagecolor="#000000"
@@ -47,7 +145,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -75,20 +173,19 @@
        y="1020.6822"
        x="132.29918"
        id="image3132"
-       xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHgAAAAeCAIAAABoq03CAAAAA3NCSVQICAjb4U/gAAAAYElEQVRo
-ge3QQRHAIADAMEAf/u2AipXHEgW9zr3P4HvrdcBfGB0xOmJ0xOiI0RGjI0ZHjI4YHTE6YnTE6IjR
-EaMjRkeMjhgdMTpidMToiNERoyNGR4yOGB0xOmJ0xOjIBWHLAdNO5mfWAAAAAElFTkSuQmCC
-"
+       xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHgAAAAeCAIAAABoq03CAAAAA3NCSVQICAjb4U/gAAAAYElEQVRo ge3QQRHAIADAMEAf/u2AipXHEgW9zr3P4HvrdcBfGB0xOmJ0xOiI0RGjI0ZHjI4YHTE6YnTE6IjR EaMjRkeMjhgdMTpidMToiNERoyNGR4yOGB0xOmJ0xOjIBWHLAdNO5mfWAAAAAElFTkSuQmCC "
        height="15"
        width="60" />
     <image
-       y="1005.5362"
-       x="171.07875"
-       id="image3143"
-       xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAIAAACQkWg2AAAAA3NCSVQICAjb4U/gAAAAGUlEQVQo
-kWP8//8/AymAiSTVoxpGNQwpDQBVbQMd5EZaEgAAAABJRU5ErkJggg==
+       y="1004.8622"
+       x="173.07143"
+       id="image2995"
+       xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABHNCSVQICAgIfAhkiAAAAEpJREFU
+OI1jZMAC/v///x+bOCMjIyOGGDEa8RkEZxCrGd0QRnI0IxvCRI5GFEPItR0GKHbBqAGDIh3AGBQl
+ZVINwZqZiDEIW3YGAK8PJBTnvghGAAAAAElFTkSuQmCC
 "
        height="8"
-       width="8" />
+       width="8"
+       style="filter:url(#filter2998)" />
   </g>
 </svg>
