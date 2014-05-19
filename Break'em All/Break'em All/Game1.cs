@@ -46,8 +46,10 @@ namespace Break_em_All
         private SoundEffect brickBallCollisionSound;
 
         //// Advertisement
-        private static readonly string applicationIdStr = "test_client";
-        private static readonly string adUnitIdStr = "Image320_50"; //other test values: Image480_80, Image300_50, TextAd
+        //private static readonly string applicationIdStr = "test_client";
+        //private static readonly string adUnitIdStr = "Image320_50"; //other test values: Image480_80, Image300_50, TextAd
+        private static readonly string applicationIdStr = "3179fba6-21f8-412c-a41a-081a160cc475";
+        private static readonly string adUnitIdStr = "10736295"; //other test values: Image480_80, Image300_50, TextAd
         private Advertisement advertisement;
 
         public Game1()
@@ -90,7 +92,8 @@ namespace Break_em_All
         /// </summary>
         protected override void LoadContent()
         {
-            this.playIcon = Content.Load<Texture2D>("playIcon");
+            this.playIcon = Content.Load<Texture2D>("Icons/play");
+            //this.playIcon = Content.Load<Texture2D>("playIcon");
             this.ballPaddleCollisionSound = Content.Load<SoundEffect>("sound/beep1");
             this.brickBallCollisionSound = Content.Load<SoundEffect>("sound/beep6");
             this.font24 = Content.Load<SpriteFont>("font/Kootenay24");
