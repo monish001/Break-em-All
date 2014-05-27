@@ -40,6 +40,11 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
+    <Compile Include="Icons\play.png">
+      <Name>play</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
     <Compile Include="paddle.png">
       <Name>paddle</Name>
       <Importer>TextureImporter</Importer>
@@ -100,6 +105,7 @@
       <Processor>FontDescriptionProcessor</Processor>
     </Compile>
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Compile Include="Icons\highscore.png">
       <Name>highscore</Name>
@@ -116,23 +122,18 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Icons\play.png">
-      <Name>play</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
     <Compile Include="Icons\rate.png">
       <Name>rate</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Icons\sound_off.png">
-      <Name>sound_off</Name>
+    <Compile Include="Icons\sound_off_transparent.png">
+      <Name>sound_off_transparent</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Icons\sound_on.png">
-      <Name>sound_on</Name>
+    <Compile Include="Icons\sound_on_transparent.png">
+      <Name>sound_on_transparent</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

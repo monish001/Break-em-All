@@ -342,10 +342,10 @@ namespace Break_em_All
                     spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend);
 
                     // Draw 'play'
-                    Vector2 playTextureDimensions = font36.MeasureString("Play  ");
+                    Vector2 playTextureDimensions = font36.MeasureString("");
                     Vector2 playIconDimensions = new Vector2(this.playIcon.Width, this.playIcon.Height);
-                    Vector2 playTextPosition = new Vector2(Game1.gameContentRect.X + Game1.gameContentRect.Width / 2 - (playTextureDimensions.X + playIconDimensions.X) / 2, Game1.gameContentRect.Y + Game1.gameContentRect.Height / 2 - (playTextureDimensions.Y) / 2);
-                    spriteBatch.DrawString(font36, "Play  ", playTextPosition, Color.White);
+                    //Vector2 playTextPosition = new Vector2(Game1.gameContentRect.X + Game1.gameContentRect.Width / 2 - (playTextureDimensions.X + playIconDimensions.X) / 2, Game1.gameContentRect.Y + Game1.gameContentRect.Height / 2 - (playTextureDimensions.Y) / 2);
+                    //spriteBatch.DrawString(font36, "Play  ", playTextPosition, Color.White);
                     Rectangle playIconRect = new Rectangle(
                         (int)(Game1.gameContentRect.X + Game1.gameContentRect.Width / 2.0 + playTextureDimensions.X / 2.0 - playIconDimensions.X / 2.0),
                         (int)(Game1.gameContentRect.Y + Game1.gameContentRect.Height / 2.0 - (playIconDimensions.Y) / 2.0),
@@ -391,10 +391,10 @@ namespace Break_em_All
                     spriteBatch.DrawString(font24, "Score: " + this.gameScore, new Vector2(gameContentRect.X + gameContentRect.Width / 2 - scoreTexture.X / 2, gameContentRect.Y + gameContentRect.Height / 2 - 2 * scoreTexture.Y), Color.White);
 
                     // Draw 'Play'
-                    Vector2 playTextureDimensions2 = font36.MeasureString("Play  ");
+                    Vector2 playTextureDimensions2 = font36.MeasureString("");
                     Vector2 playIconDimensions2 = new Vector2(this.playIcon.Width, this.playIcon.Height);
-                    Vector2 playTextPosition2 = new Vector2(Game1.gameContentRect.X + Game1.gameContentRect.Width / 2 - (playTextureDimensions2.X + playIconDimensions2.X) / 2, Game1.gameContentRect.Y + Game1.gameContentRect.Height / 2 - (playTextureDimensions2.Y) / 2);
-                    spriteBatch.DrawString(font36, "Play  ", playTextPosition2, Color.White);
+                    //Vector2 playTextPosition2 = new Vector2(Game1.gameContentRect.X + Game1.gameContentRect.Width / 2 - (playTextureDimensions2.X + playIconDimensions2.X) / 2, Game1.gameContentRect.Y + Game1.gameContentRect.Height / 2 - (playTextureDimensions2.Y) / 2);
+                    //spriteBatch.DrawString(font36, "Play  ", playTextPosition2, Color.White);
                     Rectangle playIconRect2 = new Rectangle(
                         (int)(Game1.gameContentRect.X + Game1.gameContentRect.Width / 2.0 + playTextureDimensions2.X / 2.0 - playIconDimensions2.X / 2.0),
                         (int)(Game1.gameContentRect.Y + Game1.gameContentRect.Height / 2.0 - (playIconDimensions2.Y) / 2.0),
