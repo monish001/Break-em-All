@@ -87,7 +87,11 @@ namespace Break_em_All
             {
                 position.Y = paddleLocation.Y - texture.Height;
                 direction.Y *= -1;
-                paddleCollisionSound.Play();
+
+                if (paddleCollisionSound != null)
+                {
+                    paddleCollisionSound.Play();
+                }
             }
         }
         public void Draw(SpriteBatch spriteBatch)

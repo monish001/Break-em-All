@@ -40,8 +40,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Icons\play.png">
-      <Name>play</Name>
+    <Compile Include="Icons\play256.png">
+      <Name>play256</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
@@ -105,35 +105,95 @@
       <Processor>FontDescriptionProcessor</Processor>
     </Compile>
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
-    <Compile Include="Icons\highscore.png">
-      <Name>highscore</Name>
+    <Compile Include="title.png">
+      <Name>title</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Icons\info.png">
-      <Name>info</Name>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="title glow.png">
+      <Name>title glow</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Icons\pause.png">
-      <Name>pause</Name>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="title single line.png">
+      <Name>title single line</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Icons\rate.png">
-      <Name>rate</Name>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Sound\Vegas Glitz.mp3">
+      <Name>Vegas Glitz</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SongProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Colors\black.png">
+      <Name>black</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Icons\sound_off_transparent.png">
-      <Name>sound_off_transparent</Name>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Icons\info64.png">
+      <Name>info64</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Icons\sound_on_transparent.png">
-      <Name>sound_on_transparent</Name>
+    <Compile Include="Icons\more64.png">
+      <Name>more64</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Icons\pause64.png">
+      <Name>pause64</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Icons\rate64.png">
+      <Name>rate64</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Icons\replay64.png">
+      <Name>replay64</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Icons\soundOff64.png">
+      <Name>soundOff64</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Icons\soundOn64.png">
+      <Name>soundOn64</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Colors\white.png">
+      <Name>white</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Icons\replay128.png">
+      <Name>replay128</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="credits.png">
+      <Name>credits</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

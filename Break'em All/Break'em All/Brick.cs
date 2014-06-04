@@ -42,7 +42,10 @@ namespace Break_em_All
             {
                 isAlive = false;
                 ball.Deflection(this);
-                brickBreakSound.Play();
+                if (brickBreakSound != null)
+                {
+                    brickBreakSound.Play();
+                }
                 return true;
             }
             return false;
