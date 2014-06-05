@@ -1,1 +1,4 @@
 *.cachefile
+UpgradeLog.htm
+Break'em All/Break'em AllContent/Break'em AllContent.contentproj.user
+*.suo

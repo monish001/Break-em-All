@@ -1,11 +1,6 @@
-using System;
-using System.Linq;
-using System.Windows;
-using System.Windows.Controls;
-using System.IO.IsolatedStorage;
 using System.Collections.Generic;
-using System.IO;
-using System.Xml.Serialization;
+using System.IO.IsolatedStorage;
+using System.Linq;
 namespace Break_em_All
 {
     class HighScores

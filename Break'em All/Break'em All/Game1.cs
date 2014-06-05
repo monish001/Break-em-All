@@ -1,15 +1,20 @@
 // TODO:
-// P0: Info - show text image over a popup
-// P1: Pause the game if running on interruption like home key press
-// P2: Back button on GameRunning screen should go to New game screen
+// P1: Pause the game if running on interruption like home key press - test with phone call
+// P2: Back button on GameRunning screen should go to New game screen. Confirmation if back pressing in running state.
 // P2: Seperate icons for music and sounds
+// P2: Mutliple music options
+// P2: Instead using end(), begin() for spriteBatch again and again, do it once with suitable-for-all options.
+
+// UNDER TRIAGE:
+
 
 // DONE:
+// P0: Info - show text image over a popup
 // P0: Store, read and show top five highscores
 // P0: Update icons
 // P1: Fix problem of text getting beneath the black overlay layer.
+// P2: Non pause pane - drag to resume the game
 
-using Microsoft.Phone.Shell;
 using Microsoft.Phone.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
@@ -19,7 +24,6 @@ using Microsoft.Xna.Framework.Input.Touch;
 using Microsoft.Xna.Framework.Media;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 
 namespace Break_em_All
 {
@@ -45,6 +49,8 @@ namespace Break_em_All
         private bool isMoreIconExpanded = false;
         private bool isSound = true;
         private bool isGamePaused = false;
+        private bool isInfoPaneVisible = false;
+        private Rectangle infoPaneRect;
 
         // Title as shown in the start screen
         private Texture2D title;
@@ -83,6 +89,7 @@ namespace Break_em_All
         private Rectangle pausePaneRect;
         private Texture2D blackTexture;
         private Texture2D whiteTexture;
+        private Texture2D creditsTexture;
 
         public static Rectangle gameContentRect;
         Rectangle adUnitRect;
@@ -159,6 +166,14 @@ namespace Break_em_All
         //    pausedImageOnScreen = false;
         //}
 
+        protected override void OnDeactivated(Object sender, EventArgs args)
+        {
+            if (this.gameState == GameState.RUNNING)
+            {
+                this.isGamePaused = true;
+            }
+        }
+
         //void GameDeactivated(object sender, DeactivatedEventArgs e)
         //{
         //    PhoneApplicationService.Current.State["BugPos"] = bug.Position;
@@ -189,6 +204,7 @@ namespace Break_em_All
 
             this.blackTexture = Content.Load<Texture2D>("Colors/black");
             this.whiteTexture = Content.Load<Texture2D>("Colors/white");
+            this.creditsTexture = Content.Load<Texture2D>("credits");
 
             this.ballPaddleCollisionSound = Content.Load<SoundEffect>("sound/beep1");
             this.brickBallCollisionSound = Content.Load<SoundEffect>("sound/beep6");
@@ -323,7 +339,11 @@ namespace Break_em_All
                         {
                             case GestureType.Tap:
                                 Rectangle gestureRect = new Rectangle((int)gesture.Position.X, (int)gesture.Position.Y, 0, 0);
-                                if (this.playIconStartScreenRect.Intersects(gestureRect))
+                                if (this.isInfoPaneVisible)
+                                {
+                                    this.UpdateInfoPane(gestureRect);
+                                }
+                                else if (this.playIconStartScreenRect.Intersects(gestureRect))
                                 {
                                     this.gameState = GameState.RUNNING;
                                     this.isMoreIconExpanded = false;
@@ -430,6 +450,11 @@ namespace Break_em_All
                                     // Ad is already tapped and now user is spending time on the ad landing page
                                     // Do nothing for now.
                                 }
+
+                                if (this.isInfoPaneVisible)
+                                {
+                                    this.UpdateInfoPane(gestureRect);
+                                }
                                 else if (this.replayIconEndScreenRect.Intersects(gestureRect))
                                 {
                                     this.gameState = GameState.RUNNING;
@@ -451,6 +476,17 @@ namespace Break_em_All
             base.Update(gameTime);
         }
 
+        private void UpdateInfoPane(Rectangle gestureRect)
+        {
+            // TODO: check if gestureRect intersects with non-info-pane or close icon. If yes, set isInfoPaneVisible to false.
+            if (!gestureRect.Intersects(this.infoPaneRect)
+                // or close button 
+                )
+            {
+                this.isInfoPaneVisible = false;
+            }
+        }
+
         private void UpdateEndGame()
         {
             highScores.updateHighScore(this.gameScore);
@@ -463,10 +499,10 @@ namespace Break_em_All
             while (TouchPanel.IsGestureAvailable)
             {
                 GestureSample gesture = TouchPanel.ReadGesture();
+                Rectangle gestureRect = new Rectangle((int)gesture.Position.X, (int)gesture.Position.Y, 0, 0);
                 switch (gesture.GestureType)
                 {
                     case GestureType.Tap:
-                        Rectangle gestureRect = new Rectangle((int)gesture.Position.X, (int)gesture.Position.Y, 0, 0);
                         if (this.resumeIconRect.Intersects(gestureRect))
                         {
                             this.isGamePaused = false;
@@ -483,6 +519,12 @@ namespace Break_em_All
                             MediaPlayer.IsMuted = !this.isSound;
                         }
                         else if (!this.pausePaneRect.Intersects(gestureRect))
+                        {
+                            this.isGamePaused = false;
+                        }
+                        break;
+                    case GestureType.HorizontalDrag:
+                        if (!this.pausePaneRect.Intersects(gestureRect))
                         {
                             this.isGamePaused = false;
                         }
@@ -506,7 +548,7 @@ namespace Break_em_All
             }
             else if (this.isMoreIconExpanded && this.infoIconRect.Intersects(gestureRect))
             {
-                // TODO: Show info
+                this.isInfoPaneVisible = true;
             }
             else if (this.isMoreIconExpanded && this.soundIconRect.Intersects(gestureRect))
             {
@@ -580,6 +622,12 @@ namespace Break_em_All
                     this.spriteBatch.Draw(this.playIcon, this.playIconStartScreenRect, Color.White);
 
                     this.DrawMoreIcons();
+
+                    if (this.isInfoPaneVisible)
+                    {
+                        this.DrawInfoPane();
+                    }
+
                     break;
 
                 case GameState.RUNNING:
@@ -655,6 +703,10 @@ namespace Break_em_All
                     this.DrawSectionTwoEndScreen(sectionTwoEndScreenRect);
 
                     this.DrawMoreIcons();
+                    if (this.isInfoPaneVisible)
+                    {
+                        this.DrawInfoPane();
+                    }
                     break;
                 default:
                     // TODO: logging
@@ -664,6 +716,45 @@ namespace Break_em_All
             this.spriteBatch.End();
 
             base.Draw(gameTime);
+        }
+
+        private void DrawInfoPane()
+        {
+            this.spriteBatch.End();
+            this.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend);
+
+            int padding = Game1.gameContentRect.Height / 10;
+            float opacity = 0.9f;
+
+            // Draw translucent pane
+            this.spriteBatch.Draw(this.blackTexture, this.infoPaneRect = new Rectangle(
+                Game1.gameContentRect.X + padding,
+                Game1.gameContentRect.Y + padding,
+                Game1.gameContentRect.Width - 2 * padding,
+                Game1.gameContentRect.Height - 2 * padding
+                ), Color.White * opacity);
+
+            padding /= 2;
+
+            // Draw the credits texture
+            var creditsSize = new Vector2(this.creditsTexture.Width, this.creditsTexture.Height);
+            var creditsDestRect = new Rectangle(this.infoPaneRect.X + padding, this.infoPaneRect.Y + padding, this.infoPaneRect.Width - 2 * padding, this.infoPaneRect.Height - 2 * padding);
+            if (creditsSize.X > creditsDestRect.Width)
+            {
+                creditsSize = new Vector2(creditsDestRect.Width, creditsDestRect.Width * creditsSize.Y / creditsSize.X);
+            }
+            if (creditsSize.Y > creditsDestRect.Height)
+            {
+                creditsSize = new Vector2(creditsDestRect.Height * creditsSize.X / creditsSize.Y, creditsDestRect.Height);
+            }
+            this.spriteBatch.Draw(this.creditsTexture, new Rectangle(
+                creditsDestRect.X + creditsDestRect.Width / 2 - (int)creditsSize.X / 2,
+                creditsDestRect.Y + creditsDestRect.Height / 2 - (int)creditsSize.Y / 2,
+                (int)creditsSize.X,
+                (int)creditsSize.Y
+                ), Color.White);
+
+            // Draw close icon
         }
 
         private void DrawSectionTwoEndScreen(Rectangle container)
@@ -768,7 +859,7 @@ namespace Break_em_All
         {
             // Utility variables
             float iconSize = Game1.gameContentRect.Height / 8.0f;
-            
+
             // DRAW MORE ICON
             // > 10% height of gameContent = height of moreIcon + 5% marginBottom
             Vector2 moreIconSize = new Vector2(this.moreIcon.Width, this.moreIcon.Height);
