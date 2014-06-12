@@ -1,20 +1,3 @@
-// TODO:
-// P1: Pause the game if running on interruption like home key press - test with phone call
-// P2: Back button on GameRunning screen should go to New game screen. Confirmation if back pressing in running state.
-// P2: Seperate icons for music and sounds
-// P2: Mutliple music options
-// P2: Instead using end(), begin() for spriteBatch again and again, do it once with suitable-for-all options.
-
-// UNDER TRIAGE:
-
-
-// DONE:
-// P0: Info - show text image over a popup
-// P0: Store, read and show top five highscores
-// P0: Update icons
-// P1: Fix problem of text getting beneath the black overlay layer.
-// P2: Non pause pane - drag to resume the game
-
 using Microsoft.Phone.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;

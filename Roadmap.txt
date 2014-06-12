@@ -9,27 +9,41 @@ Version 1.1.0.0 Released:
 > Bug fix: Game exits as soon as it is opened. DONE. This was because for background image should be 2^N pixels wide and long (due to tiling).
 
 Version 1.2.0.0:
-> UI Theme upgrade. Add game title and icons (instead of text) for play, replay and highscore. IN PROGRESS.
-> Feature: Implement highscore (user can see his highscores). IN PROGRESS.
+	DONE:
+	> P0: UI Theme upgrade. Update icons. Add game title and icons (instead of text) for PLAY, PAUSE, RESUME, RATE, MORE AND INFO.
+	> P0: Info - show text image over a pop-up
+	> P0: Feature: Implement high score (user can see his high scores). Store, read and show top five high scores.
 
 Version 1.3.0.0 and onwards:
-> Feature: Finalize icons for sound, highscore, rate, play, refresh/replay, FEEDBACK
-> Feature: Give link to rate the app.
-> Feature: Give link to the QR code of the app.
-> Feature: Implement global highscores.
-> Feature: Levels having patterns of spaces inside the bricks.
-> Feature Suggestion: Full grid should move down and new bricks should add from top.
-> Feature: Find direction of ball based on where it hits the paddle. Also, update paddle image to show curves.
-> Feature: Make the background movement in x direction SMOOTH.
-> Feature: Localization (of text).
-> Feature: Props on multi-brick break.
-> Feature: Audio for animations
-> Feature: Animations for ball, paddle and brick blasts.
-> Feature: Hide ads if user share the game.
-> Feature: Show ads as big bricks and breaking these lead to powers.
+	PENDING:
+	> P0: Introduce multiplier. Default value = 0. Score per brick = 10 + multiplier. There are two ways to increase multiplier, +1 on 500+ score OR +5 if friend also installs the app.
+	> P0: Introduce powers on brick collapse.
+	> Hardware Back btn on info screen
+	> Touch anywhere on info screen to close
+	> share by email/wassup/fb. Share app from home screen. And share score from end screen
+	> P1: Pause the game if running on interruption like home key press, phone call.
+	> P2: Back button on GameRunning screen should go to New game screen. Confirmation if back pressing in running state.
+	> P2: Separate icons for music and sounds
+	> P2: Multiple music options
+	> BUG: Don't begin and end spriteBatch again and again. Instead find a global setting and begin and end once.
+	> Feature: Finalize icons for sound, high score, rate, play, refresh/replay, FEEDBACK
+	> Feature: Give link to rate the app.
+	> Feature: Give link to the QR code of the app.
+	> Feature: Implement global high scores.
+	> Feature: Levels having patterns of spaces inside the bricks.
+	> Feature Suggestion: Full grid should move down and new bricks should add from top.
+	> Feature: Find direction of ball based on where it hits the paddle. Also, update paddle image to show curves.
+	> Feature: Make the background movement in x direction SMOOTH.
+	> Feature: Localization (of text).
+	> Feature: Props on multi-brick break.
+	> Feature: Audio for animations
+	> Feature: Animations for ball, paddle and brick blasts.
+	> Feature: Hide ads if user share the game.
+	> Feature: Show ads as big bricks and breaking these lead to powers.
 
 
 ==================================================
 ==                    BUGS                      ==
 ==================================================
+ACTIVE
 > When ball hits middle of two bricks, the ball changes directions twice. Hence, keeping the same direction. Expected behaviour: Ball should bounce ball or change direction.
